@@ -53,6 +53,12 @@ namespace API
                 opt.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddCors(opt=>{
+               opt.AddPolicy("CorsPolicy",policy=>{
+                   policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+               });
+            });
+
             // services.AddTransient<InterfaceDeneme,InterfaceDenemeClass>();
 
             // var serviceProvider = services.BuildServiceProvider();
@@ -73,6 +79,8 @@ namespace API
             {
                 app.UseHsts();
             }
+
+            app.UseCors("CorsPolicy");
 
             //app.UseHttpsRedirection();
             app.UseMvc();
